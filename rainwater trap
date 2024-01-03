@@ -1,0 +1,135 @@
+
+#include<stdio.h>
+#include<stdlib.h>
+
+static int sum=0;
+
+     int maxofarr(int* arr,int n)
+    {
+    
+        int j=0;
+        int temp=arr[0];       //reread with first element in temp 
+               //and starting from left end
+        if(n==0)
+        {
+            return -1;
+        }       
+        for(int i=j;i<n;i++)           
+        {
+            if(arr[i]>temp)   // this loop is same as above ,,condition is different
+            {
+                temp=arr[i];
+                j=i;
+                continue;
+            }
+        }//temp is max
+        return j;
+    }
+
+int sidesidemaxleft(int* arr,int j,int* leftarr)
+{
+    //printf("hi");
+    static int k=0;
+    int* leftarr2;
+    
+    k=maxofarr(leftarr,j);           //max of left array
+    //printf("hello");
+    if(k!=-1)
+    {
+        //printf("heyy");
+        //printf("k max is%d\n",k);
+        for(int h=k+1;h<j;h++)                 //between max of left array and max of parent array
+        {
+            sum+=leftarr[k]-leftarr[h];
+            //printf("sum is %d ",sum);
+        }
+        //printf("\n");
+
+        if(k>0)
+        {
+            leftarr2=(int*)malloc(k*sizeof(int));
+            for(int o=0;o<k;o++)
+            {
+                leftarr2[o]=leftarr[o];
+                    //printf("leftarr2[o] is %d ",leftarr2[o]);
+            }
+            sidesidemaxleft(leftarr,k,leftarr2);
+        }
+    }    
+   return sum;
+}
+
+int sidesidemaxright(int* arr,int j,int siz,int* rightarr)
+{
+    //printf("fine");
+    int k=0;
+    int m=0;
+    int* rightarr2;
+    
+    k=maxofarr(rightarr,siz-j-1);
+    //printf("hiii");
+    if((k!=-1)&&(k<siz-j-1))
+    {
+        //printf("geez");
+        for(int h=0;h<k;h++)
+        {
+            // printf("heyya");
+            // printf("rightarr[k]=%d, k=%d, rightarr[h]=%d, h=%d\n",rightarr[k],k,rightarr[h],h);
+            sum+=rightarr[k]-rightarr[h];
+            //printf("sum second is %d ",sum);
+        }
+        if(siz-j-k-2>0)
+        {
+            rightarr2=(int*)malloc((siz-j-k-2)*sizeof(int));
+            for(int o=k+1;o<siz-j-1;o++)
+            {
+                rightarr2[o-k-1]=rightarr[o];
+            }
+            m=maxofarr(rightarr2,siz-j-k-2);
+            sidesidemaxright(rightarr,m,siz-j-1,rightarr2);
+        }
+    }
+    
+    return sum;
+    
+}
+
+int main()
+{
+    int* arr;
+    int* arr2;
+    int* arr3;
+    int n=0; //parent array size   
+    int temp=0;
+    int j=0;
+    int summfinale=0;
+
+    scanf("%d",&n);
+                                                  //scan size of parent array
+    arr=(int*)malloc(n*sizeof(int));               //mallocate it
+    printf("next");
+    for(int j=0;j<n;j++)
+    {
+        scanf("%d",&arr[j]);                       //input
+    }     
+
+    j=maxofarr(arr,n);                         //find max of parent array
+
+    arr2=(int*)malloc(j*sizeof(int));          //mallocate an array left to the max of parent
+    for(int g=0;g<j;g++)
+    {
+        arr2[g]=arr[g];                      //fill left array with elementsleft of max
+    }
+
+    arr3=(int*)malloc((n-j-1)*sizeof(int));                 //mallocate an array to the right of parent
+    for(int g=0;g<n-j-1;g++)
+    {
+        arr3[g]=arr[g+j+1];                                    //fill right array with elements right of max
+    }
+    sidesidemaxleft(arr,j,arr2);                       //call function to find rainwater in the right array
+    summfinale=sidesidemaxright(arr,j,n,arr3);                  //call function to find rainwater in the left of array
+    printf("sum finally is %d",summfinale);                        //print sum of units of water filled
+
+    return 0;
+
+}
