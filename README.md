@@ -1,1 +1,1 @@
-these code are old (2022)
+old is gold (2022)
