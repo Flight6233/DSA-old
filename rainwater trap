@@ -1,4 +1,3 @@
-
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -36,7 +35,7 @@ int sidesidemaxleft(int* arr,int j,int* leftarr)
     {
         for(int h=k+1;h<j;h++)                 //between max of left array and max of parent array
         {
-            sum+=leftarr[k]-leftarr[h];
+            sum+=leftarr[k]-leftarr[h];       //here is calculated : the water collected  in between max of left arr and parent arr.
         }
         if(k>0)
         {
@@ -111,10 +110,9 @@ int main()
     {
         arr3[g]=arr[g+j+1];                                    //fill right array with elements right of max
     }
-    sidesidemaxleft(arr,j,arr2);                       //call function to find rainwater in the right array
-    summfinale=sidesidemaxright(arr,j,n,arr3);                  //call function to find rainwater in the left of array
+    sidesidemaxleft(arr,j,arr2);                       //call function to find rainwater in the left array
+    summfinale=sidesidemaxright(arr,j,n,arr3);                  //call function to find rainwater in the right array
     printf("sum finally is %d",summfinale);                        //print sum of units of water filled
 
     return 0;
-
 }
