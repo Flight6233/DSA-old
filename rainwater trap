@@ -28,30 +28,22 @@ static int sum=0;
 
 int sidesidemaxleft(int* arr,int j,int* leftarr)
 {
-    //printf("hi");
     static int k=0;
     int* leftarr2;
     
     k=maxofarr(leftarr,j);           //max of left array
-    //printf("hello");
     if(k!=-1)
     {
-        //printf("heyy");
-        //printf("k max is%d\n",k);
         for(int h=k+1;h<j;h++)                 //between max of left array and max of parent array
         {
             sum+=leftarr[k]-leftarr[h];
-            //printf("sum is %d ",sum);
         }
-        //printf("\n");
-
         if(k>0)
         {
             leftarr2=(int*)malloc(k*sizeof(int));
             for(int o=0;o<k;o++)
             {
                 leftarr2[o]=leftarr[o];
-                    //printf("leftarr2[o] is %d ",leftarr2[o]);
             }
             sidesidemaxleft(leftarr,k,leftarr2);
         }
@@ -61,22 +53,16 @@ int sidesidemaxleft(int* arr,int j,int* leftarr)
 
 int sidesidemaxright(int* arr,int j,int siz,int* rightarr)
 {
-    //printf("fine");
     int k=0;
     int m=0;
     int* rightarr2;
     
     k=maxofarr(rightarr,siz-j-1);
-    //printf("hiii");
     if((k!=-1)&&(k<siz-j-1))
     {
-        //printf("geez");
         for(int h=0;h<k;h++)
         {
-            // printf("heyya");
-            // printf("rightarr[k]=%d, k=%d, rightarr[h]=%d, h=%d\n",rightarr[k],k,rightarr[h],h);
             sum+=rightarr[k]-rightarr[h];
-            //printf("sum second is %d ",sum);
         }
         if(siz-j-k-2>0)
         {
@@ -107,7 +93,6 @@ int main()
     scanf("%d",&n);
                                                   //scan size of parent array
     arr=(int*)malloc(n*sizeof(int));               //mallocate it
-    printf("next");
     for(int j=0;j<n;j++)
     {
         scanf("%d",&arr[j]);                       //input
